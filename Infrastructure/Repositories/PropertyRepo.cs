@@ -3,6 +3,7 @@ namespace Infrastructure.Repositories;
 using Application.Repositories;
 using Domain;
 using Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 public class PropertyRepo: IPropertyRepo
 {
@@ -26,7 +27,15 @@ public class PropertyRepo: IPropertyRepo
 
     public Task<List<Property>> GetAllAsync() => throw new NotImplementedException();
 
-    public Task UpdateAsync(Property property) => throw new NotImplementedException();
+    public async Task UpdateAsync(Property property)
+    {
+        _context.Properties.Update(property);
+        await _context.SaveChangesAsync();
+    }
 
-    public Task<Property> GetByIdAsync(int id) => throw new NotImplementedException();
+    public async Task<Property> GetByIdAsync(int id)
+    {
+        var property = await _context.Properties.FirstOrDefaultAsync(x => x.Id == id);
+        return property;
+    }
 }

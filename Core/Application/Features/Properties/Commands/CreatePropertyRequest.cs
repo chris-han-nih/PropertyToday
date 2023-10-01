@@ -8,9 +8,9 @@ using MediatR;
 
 public class CreatePropertyRequest: IRequest<bool>
 {
-    public NewPropertyRequest PropertyRequest { get; set; }
+    public NewProperty PropertyRequest { get; set; }
 
-    public CreatePropertyRequest(NewPropertyRequest propertyRequest) => PropertyRequest = propertyRequest;
+    public CreatePropertyRequest(NewProperty propertyRequest) => PropertyRequest = propertyRequest;
 }
 
 public class CreatePropertyRequestHandler : IRequestHandler<CreatePropertyRequest, bool>
@@ -27,6 +27,7 @@ public class CreatePropertyRequestHandler : IRequestHandler<CreatePropertyReques
     public async Task<bool> Handle(CreatePropertyRequest request, CancellationToken cancellationToken)
     {
         var property = _mapper.Map<Property>(request.PropertyRequest);
+        property.ListDate = DateTime.UtcNow;
         await _propertyRepo.AddNewAsync(property);
         
         return true;

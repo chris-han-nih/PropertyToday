@@ -17,7 +17,7 @@ public class Property
     public bool PetsAllowed { get; set; }
     public int Bedrooms { get; set; }
     public int Bathrooms { get; set; }
-    public int Kitches { get; set; }
+    public int Kitchens { get; set; }
     public int Louge { get; set; }
     public int Dining { get; set; }
     public DateTime ListDate { get; set; }
