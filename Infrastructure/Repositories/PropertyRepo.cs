@@ -20,9 +20,10 @@ public class PropertyRepo: IPropertyRepo
         await _context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Property property)
+    public async Task DeleteAsync(Property property)
     {
-        throw new NotImplementedException();
+        _context.Properties.Remove(property);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<List<Property>> GetAllAsync()

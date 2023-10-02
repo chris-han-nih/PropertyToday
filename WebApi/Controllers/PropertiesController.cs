@@ -21,18 +21,18 @@ public sealed class PropertiesController: ControllerBase
     public async Task<IActionResult> AddNewProperty([FromBody]NewProperty newPropertyRequest)
     {
         var isSuccessful = await _sender.Send(new CreatePropertyRequest(newPropertyRequest));
-        if (isSuccessful)
-            return Ok("Property added successfully");
-        return BadRequest("Property could not be added");
+        return isSuccessful
+                   ? Ok("Property added successfully")
+                   : BadRequest("Property could not be added");
     }
     
     [HttpPut("update")]
     public async Task<IActionResult> UpdateProperty([FromBody]UpdateProperty updatePropertyRequest)
     {
         var isSuccessful = await _sender.Send(new UpdatePropertyRequest(updatePropertyRequest));
-        if (isSuccessful)
-            return Ok("Property updated successfully");
-        return NotFound("Property does not exist");
+        return isSuccessful
+                   ? Ok("Property updated successfully")
+                   : NotFound("Property does not exist");
     }
 
     [HttpGet("{id}")]
@@ -51,5 +51,14 @@ public sealed class PropertiesController: ControllerBase
         return properties == null
                    ? NotFound("No properties found")
                    : Ok(properties);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProperty(int id)
+    {
+        var isSuccessful = await _sender.Send(new DeletePropertyRequest(id));
+        return isSuccessful
+                   ? Ok("Property deleted successfully")
+                   : NotFound("Property does not exist");
     }
 }
