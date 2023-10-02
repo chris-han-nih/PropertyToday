@@ -19,4 +19,5 @@ public class PropertyDto
     public int Louge { get; set; }
     public int Dining { get; set; }
     public DateTime ListDate { get; set; }
+    public List<ImageDto> Images { get; set; }
 }

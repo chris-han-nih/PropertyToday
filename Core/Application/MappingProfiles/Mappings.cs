@@ -11,5 +11,8 @@ public class Mappings: Profile
         CreateMap<NewProperty, Property>();
         CreateMap<UpdateProperty, Property>();
         CreateMap<Property, PropertyDto>();
+        CreateMap<NewImage, Image>();
+        CreateMap<UpdateImage, Image>();
+        CreateMap<Image, ImageDto>();
     }
 }
