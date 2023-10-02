@@ -1,6 +1,7 @@
 namespace WebApi.Controllers;
 
 using Application.Features.Properties.Commands;
+using Application.Features.Properties.Queries;
 using Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -32,5 +33,23 @@ public sealed class PropertiesController: ControllerBase
         if (isSuccessful)
             return Ok("Property updated successfully");
         return NotFound("Property does not exist");
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPropertyById(int id)
+    {
+        var property = await _sender.Send(new GetPropertyByIdRequest(id));
+        return property == null
+                   ? NotFound("Property does not exist")
+                   : Ok(property);
+    }
+    
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllProperties()
+    {
+        var properties = await _sender.Send(new GetPropertiesRequest());
+        return properties == null
+                   ? NotFound("No properties found")
+                   : Ok(properties);
     }
 }

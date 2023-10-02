@@ -25,7 +25,10 @@ public class PropertyRepo: IPropertyRepo
         throw new NotImplementedException();
     }
 
-    public Task<List<Property>> GetAllAsync() => throw new NotImplementedException();
+    public async Task<List<Property>> GetAllAsync()
+    {
+        return await _context.Properties.ToListAsync();
+    }
 
     public async Task UpdateAsync(Property property)
     {
