@@ -1,12 +1,17 @@
 namespace Application.Features.Properties.Queries;
 
 using Application.Models;
+using Application.PipelineBehaviors.Contracts;
 using Application.Repositories;
 using AutoMapper;
+using FluentAssertions.Extensions;
 using MediatR;
 
-public class GetPropertiesRequest: IRequest<List<PropertyDto>>
+public class GetPropertiesRequest: IRequest<List<PropertyDto>>, ICacheable
 {
+    public string CacheKey { get; set; } = "GetProperties";
+    public bool BypassCache { get; set; } = false;
+    public TimeSpan SlidingExpiration { get; set; } = 5.Minutes();
 }
 
 public class GetPropertiesRequestHandler : IRequestHandler<GetPropertiesRequest, List<PropertyDto>>

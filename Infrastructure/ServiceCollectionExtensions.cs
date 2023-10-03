@@ -13,6 +13,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IPropertyRepo, PropertyRepo>()
                 .AddTransient<IImageRepo, ImageRepo>()
+                .AddStackExchangeRedisCache(options =>
+                                            {
+                                                options.Configuration = configuration.GetConnectionString("RedisConnectionString");
+                                            })
                 .AddDbContext<ApplicationDbContext>(options =>
                                                     {
                                                         options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
