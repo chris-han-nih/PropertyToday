@@ -8,11 +8,8 @@ using Application.Models;
 public class ErrorHandlingMiddleware
 {
     private readonly RequestDelegate _next;
-    public ErrorHandlingMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-    
+    public ErrorHandlingMiddleware(RequestDelegate next) => _next = next;
+
     public async Task InvokeAsync(HttpContext context)
     {
         try
